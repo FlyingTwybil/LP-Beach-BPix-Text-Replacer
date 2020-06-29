@@ -1,0 +1,35 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=4
+
+_global_script_classes=[  ]
+_global_script_class_icons={
+
+}
+
+[application]
+
+config/name="BPix Text Replacer"
+config/description="Quickly replaces sequential links in Bpix"
+run/main_scene="res://BaseScene.tscn"
+boot_splash/image="res://splash.png"
+config/icon="res://icon.png"
+
+[display]
+
+window/size/width=1100
+window/size/height=584
+window/size/resizable=false
+
+[rendering]
+
+quality/driver/driver_name="GLES2"
+vram_compression/import_etc=true
+vram_compression/import_etc2=false
+environment/default_environment="res://default_env.tres"
