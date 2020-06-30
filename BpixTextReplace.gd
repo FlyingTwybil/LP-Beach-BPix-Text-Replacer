@@ -58,10 +58,40 @@ func resolve_delim():
 #This calculates based on the found number of image tags and their value which images are missing in the sequence
 #Thus it can space out the actual Tag->link list to acommodate.
 
+func fix_https_address(link : String):
+	link = link.to_lower()
+	
+	if link.begins_with(hyperlink_header + "upload"):
+		#The link should be fine, so we leave doing this
+		return link
+	
+	#Proper Structure: https://bpix.lpbeach.co.uk/upload/2020/06/30/20200630033119-f86c2a40.jpg
+	#Bad Structure: https://bpix.lpbeach.co.uk/_data/i/upload/2020/06/30/20200630033746-f86c2a40-xs.jpg
+	#Alt Bad Structure; https://bpix.lpbeach.co.uk/i.php?/upload/2020/06/30/20200630033931-4ed5fc27-xs.jpg
+	
+	var split = link.split("/_data/i/", true, 1)
+	
+	if split.size() == 1:
+		split = link.split("/i.php?/", true, 1)
+	
+	var second_split = split[1].rsplit(".", true, 1)
+	
+	#Take the semi-correct right side and get the proper image type
+	var img_type : String = "." + second_split[1].split("[", true, 1)[0]
+	
+	#Now rip off that damn thumbnail tag
+	var third_split = second_split[0].rsplit("-", true, 1)
+	
+	link = hyperlink_header + third_split[0] + img_type
+	return link
+
+
 func fix_img_bbcode_tags(link : String):
 	
 	link = link.to_lower()
-		
+	
+	link = fix_https_address(link)
+	
 	var add_front : bool = false
 	var add_back : bool = false
 	
@@ -108,20 +138,25 @@ func form_exclude_list():
 				#it's a valid tag number
 				var num = int(split_two)
 				#Automatically expand the array to fit, though leave some extra room as a hack
-				if num > located_number_arr.size() - 1:
-					located_number_arr.resize(num + 1)
+				#if num >= located_number_arr.size() - 1:
+				located_number_arr.resize(num + 1)
 				located_number_arr[num] = "Valid"
 		
 	var i : int = 0
+	
+	var debug_invalid_count : int = 0
+	
 	if located_number_arr.size() > 0:
 		for value in located_number_arr: #Go through the list and make a cleaner dictionary.
 			if located_number_arr[i] == null:
+				debug_invalid_count = debug_invalid_count + 1
 				result_dict[i] = "Invalid"
 			else:
 				result_dict[i] = located_number_arr[i]
 				
 			i = i + 1
 		
+		print(debug_invalid_count)
 		return result_dict
 	pass
 
@@ -147,9 +182,9 @@ func form_link_list(excl_list : Dictionary):
 			#	else:
 			#		print("Found invalid or link == null")
 			#	excl_idx = excl_idx + 1
-			
+			#breakpoint
 			for val in excl_list:
-				if i < split.size():
+				if i < split.size() and excl_idx <= excl_list.size():
 					var link = split[i]
 					print(excl_idx)
 					if excl_list.has(excl_idx) and excl_list[excl_idx] == "Valid":
@@ -196,7 +231,7 @@ func replace_text(link_list : Dictionary):
 		var second_split = line.split(" ")
 		#We do this to separate each word
 		for word in second_split:
-			print(word)
+			#print(word)
 			if word.find(delim) != -1 and link_list.has(int(word)):
 				#Extra safety check, just in case portraits have numbers in them:
 				if numericsafety_button.pressed == true and word.split(delim)[1].is_valid_integer():
@@ -252,4 +287,19 @@ func _on_ClearButton_pressed():
 	update_textedit.text = ""
 	links_textedit.text = ""
 	result_textedit.text = ""
+	pass # Replace with function body.
+
+
+func _on_FixLinksButton_pressed():
+	
+	if links_textedit.text and links_textedit.text != "":
+		var newtext : String
+		var split = links_textedit.text.split("\n")
+		
+		for link in split:
+			var txt = fix_https_address(link)
+			newtext = newtext + txt + "\n"
+			
+		links_textedit.text = newtext
+		
 	pass # Replace with function body.

@@ -298,7 +298,7 @@ margin_bottom = 120.0
 [node name="txtResult" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2"]
 margin_top = 124.0
 margin_right = 466.0
-margin_bottom = 569.0
+margin_bottom = 515.0
 size_flags_vertical = 3
 custom_constants/margin_right = 5
 custom_constants/margin_top = 3
@@ -309,14 +309,14 @@ custom_constants/margin_bottom = 5
 margin_left = 5.0
 margin_top = 3.0
 margin_right = 461.0
-margin_bottom = 440.0
+margin_bottom = 386.0
 color = Color( 0.321569, 0.372549, 0.321569, 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/txtResult"]
 margin_left = 5.0
 margin_top = 3.0
 margin_right = 461.0
-margin_bottom = 440.0
+margin_bottom = 386.0
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
 __meta__ = {
@@ -326,7 +326,7 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/txtResult/MarginContainer"]
 margin_left = 10.0
 margin_right = 446.0
-margin_bottom = 437.0
+margin_bottom = 383.0
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/txtResult/MarginContainer/VBoxContainer"]
 margin_right = 436.0
@@ -346,11 +346,60 @@ text = " Resulting Update Text:"
 [node name="Result" type="TextEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer2/txtResult/MarginContainer/VBoxContainer"]
 margin_top = 33.0
 margin_right = 436.0
-margin_bottom = 437.0
+margin_bottom = 383.0
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0.94902, 0.94902, 0.94902, 1 )
 custom_colors/font_color_readonly = Color( 0.843137, 0.843137, 0.843137, 1 )
 readonly = true
+
+[node name="MarginContainer3" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2"]
+margin_top = 519.0
+margin_right = 466.0
+margin_bottom = 569.0
+rect_min_size = Vector2( 0, 50 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer3"]
+margin_right = 466.0
+margin_bottom = 50.0
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer3/HBoxContainer"]
+margin_right = 325.0
+margin_bottom = 50.0
+rect_min_size = Vector2( 325, 0 )
+custom_constants/margin_right = 0
+custom_constants/margin_top = 4
+custom_constants/margin_left = 10
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer3/HBoxContainer/MarginContainer"]
+margin_left = 10.0
+margin_top = 4.0
+margin_right = 325.0
+margin_bottom = 50.0
+bbcode_enabled = true
+bbcode_text = "If your links have a \"-th\", \"-xs\", \"-2x\" or the like at the end, you have a thumbnailed link.
+This button will fix all the links in the link box."
+text = "If your links have a \"-th\", \"-xs\", \"-2x\" or the like at the end, you have a thumbnailed link.
+This button will fix all the links in the link box."
+scroll_active = false
+
+[node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer3/HBoxContainer"]
+margin_left = 329.0
+margin_right = 466.0
+margin_bottom = 50.0
+size_flags_horizontal = 3
+custom_constants/margin_right = 14
+custom_constants/margin_top = 8
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = 8
+
+[node name="FixLinksButton" type="Button" parent="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer3/HBoxContainer/MarginContainer2"]
+margin_left = 8.0
+margin_top = 8.0
+margin_right = 123.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+text = "Fix Links"
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/MarginContainer/HBoxContainer/MarginContainer/ReplaceButton" to="." method="_on_ReplaceButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/MarginContainer/HBoxContainer/MarginContainer2/CopyButton" to="." method="_on_CopyButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/MarginContainer/HBoxContainer/MarginContainer3/ClearButton" to="." method="_on_ClearButton_pressed"]
+[connection signal="pressed" from="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer3/HBoxContainer/MarginContainer2/FixLinksButton" to="." method="_on_FixLinksButton_pressed"]
