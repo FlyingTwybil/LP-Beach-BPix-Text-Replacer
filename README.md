@@ -1,6 +1,4 @@
 # LP-Beach-BPix-Text-Replacer
-Replaces the text for image links sequentially to get past Piwigo's naming obfuscation.
-
-It also, as of v1.1, has the ability to fix image links and remove the thumbnailing.
+Originally designed for sequential tag replacement in the very early days of LP Beach, it's now a general purpose text replacer. The old stuff's still around but deprecated, if you need it.
 
 Check the releases for compliled binaries.
