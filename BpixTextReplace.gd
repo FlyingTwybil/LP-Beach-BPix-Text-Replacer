@@ -283,7 +283,7 @@ func form_link_list_new():
 				#Bracket Tagging - [Filename]
 				#Since we're brute force replacing anyhow, most of the work in this
 				#style is just adding the bracket delimiters.
-				tag =  "[" + split_three[0] + "]"
+				tag =  "[" + split_four[0] + "]"
 				pass
 			
 			#breakpoint
