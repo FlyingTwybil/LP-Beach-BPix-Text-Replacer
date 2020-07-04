@@ -7,7 +7,10 @@ var links_textedit : TextEdit
 var result_textedit : TextEdit
 
 var tagtype_optionbutton : OptionButton
+var tagtype_extraidentifier : TextEdit
+
 var numericsafety_button : CheckButton
+var sequentialtags_button : CheckButton
 #var exclude_textedit : TextEdit
 
 var delim
@@ -21,7 +24,10 @@ func _ready():
 	result_textedit = get_node("HBoxContainer/MarginContainer2/VBoxContainer2/txtResult/MarginContainer/VBoxContainer/Result")
 	
 	tagtype_optionbutton = get_node("HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer2/vbox/MarginContainer2/OptionButton")
+	tagtype_extraidentifier = get_node("HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer2/vbox/MarginContainer/HBoxContainer/IdentifierBox")
+	
 	numericsafety_button = get_node("HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer/NumericSafetyButton")
+	sequentialtags_button = get_node("HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer4/SequentialButton")
 	#exclude_textedit = get_node("HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer/VBoxContainer/TextEdit")
 	
 	#var string1 = "#001"
@@ -47,6 +53,8 @@ func resolve_delim():
 		return "#"
 	elif option == 2:
 		return "[IMG"
+	elif option == 3:
+		return "[" + tagtype_extraidentifier.text + "."
 	else:
 		return false
 
@@ -69,6 +77,13 @@ func fix_https_address(link : String):
 	#Bad Structure: https://bpix.lpbeach.co.uk/_data/i/upload/2020/06/30/20200630033746-f86c2a40-xs.jpg
 	#Alt Bad Structure; https://bpix.lpbeach.co.uk/i.php?/upload/2020/06/30/20200630033931-4ed5fc27-xs.jpg
 	
+	#Removes filepath and saves it for the end
+	var presplit = link.rsplit(",", false, 1)
+	if presplit.size() > 1:
+		#if we did remove the filepath
+		link = presplit[1]
+	
+	
 	var split = link.split("/_data/i/", true, 1)
 	
 	if split.size() == 1:
@@ -82,7 +97,10 @@ func fix_https_address(link : String):
 	#Now rip off that damn thumbnail tag
 	var third_split = second_split[0].rsplit("-", true, 1)
 	
-	link = hyperlink_header + third_split[0] + img_type
+	if presplit.size() > 1:
+		link = presplit[0] + "," + hyperlink_header + third_split[0] + img_type 
+	else:
+		link = hyperlink_header + third_split[0] + img_type
 	return link
 
 
@@ -90,7 +108,7 @@ func fix_img_bbcode_tags(link : String):
 	
 	link = link.to_lower()
 	
-	link = fix_https_address(link)
+	#link = fix_https_address(link)
 	
 	var add_front : bool = false
 	var add_back : bool = false
@@ -219,6 +237,65 @@ func form_link_list(excl_list : Dictionary):
 	
 	pass
 
+func form_link_list_new():
+	var text : String = links_textedit.text
+	#Sample: C:\projects\BPixUploader\TestData\002.jpg,https://bpix.lpbeach.co.uk/upload/1592-f0b77467.jpg
+	#1. Separate each link from one another
+	#2. Separate the image name from the link per link
+	#2-a. Add bbcode tags to image if needed, save as linkvar
+	#3. Separate tag from both its image name and file location 
+	
+	if text and text != "":
+		var dict : Dictionary
+		var split_one : Array = text.split("\n", false)
+		
+		var backslash_str : String = "\n"
+		backslash_str = backslash_str.split("n", false, 1)[0]
+		
+		for linkset in split_one:
+			var link : String
+			var tag : String
+			
+			var split_two = linkset.split(",", false, 1)
+			if split_two.size() != 2:
+				print("Split Two missing comma delimiter. Not a BPIX link?")
+				return false
+			link = fix_img_bbcode_tags(split_two[1])
+			
+			var split_three = split_two[0].rsplit(backslash_str, false, 1)
+			#breakpoint
+			if split_three.size() != 2:
+				print("Split Three too small! Not an actual filepath? Faking it anyways...")
+				#It's not a real filepath in this case, so we'll just fake it
+				#by duplicating to the expected result
+				split_three.append(split_three[0])
+				#return false
+			
+			#We rsplit here because some methods use . in the filename
+			var split_four = split_three[1].rsplit(".", false, 1)
+			
+			#Now we need finalize the tag based on the chosen tag style:
+			if tagtype_optionbutton.selected == 1:
+				tag = delim + split_four[0].split("-", false, 1)[0]
+			elif tagtype_optionbutton.selected == 2:
+				pass
+			elif tagtype_optionbutton.selected == 3:
+				#Bracket Tagging - [Filename]
+				#Since we're brute force replacing anyhow, most of the work in this
+				#style is just adding the bracket delimiters.
+				tag =  "[" + split_three[0] + "]"
+				pass
+			
+			#breakpoint
+			dict[tag] = link
+			
+		return dict
+		pass
+		
+	else:
+		return false
+	pass
+
 func replace_text(link_list : Dictionary):
 	#So now, with the exclude list and link list made, the link list should have its keys correspond to all
 	#of the image tags only. Now we just do a quick replace.
@@ -254,6 +331,27 @@ func replace_text(link_list : Dictionary):
 	return finaltext
 	pass
 
+func replace_text_new(link_list : Dictionary):
+	var final_text : String = ""
+	
+	var text = update_textedit.text #we've already done a safety check on this in OnReplaceButton, no need for another
+	var first_split = text.split("\n")
+	#First we split on newline to read the document line by line
+	for line in first_split:
+		for key in link_list:
+			#breakpoint
+			print(line.findn(key))
+			if line.findn(key) != -1:
+				#breakpoint
+				line = line.replacen(key, link_list[key])
+				#breakpoint
+		
+		final_text = final_text + line + "\n"
+		
+	
+	#Should be all that's necessary, though it may be intensive.
+	return final_text
+	pass
 
 func _on_ReplaceButton_pressed():
 	
@@ -264,16 +362,23 @@ func _on_ReplaceButton_pressed():
 	#	pass
 	
 	
-	if update_textedit.text and update_textedit.text != null:
+	if update_textedit.text and update_textedit.text != null and tagtype_optionbutton.selected != -1:
 		var text : String = update_textedit.text
 		
 		delim = resolve_delim()
 		
-		var exclude_list : Dictionary = form_exclude_list()
-		#breakpoint
-		var link_list : Dictionary = form_link_list(exclude_list)
-		#breakpoint
-		result_textedit.text = replace_text(link_list)
+		if sequentialtags_button.pressed:
+			var exclude_list : Dictionary = form_exclude_list()
+			#breakpoint
+			var link_list : Dictionary = form_link_list(exclude_list)
+			#breakpoint
+			result_textedit.text = replace_text(link_list)
+		
+		else:
+			var link_list = form_link_list_new()
+			print(link_list)
+			if link_list:
+				result_textedit.text = replace_text_new(link_list)
 		
 	pass
 

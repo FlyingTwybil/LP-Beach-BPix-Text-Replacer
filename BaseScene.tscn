@@ -67,15 +67,15 @@ margin_bottom = 170.0
 rect_min_size = Vector2( 600, 170 )
 bbcode_enabled = true
 bbcode_text = "To use, copy your update text into the Update box and your image links into the Links box. Make sure your image tags are using the selected tag format on the right and hit \"Replace Text\" to replace the update text.
+
+Those On/Off buttons to the side are to re-enable the old method of sequential replacement used back before we had easy filenames with their links around. It remains as a functional, but obsolete system.
 	
-	If your portrait tags have some numbers in them, (such as \"npcsad_01\",) enable numeric safety on the right to prevent the program misinterpreting them.
-	
-	The program parses the image tags linearly. Thus, the first image link  should correspond to whatever your first image tag's number is. The program will calculate ahead of time any missing numbers in the sequence, thus if you have a #01 and #03, but no #02, it will assign the second image link to be #03 instead."
+Contact me in the Discord if you have any questions or requests and I'll get back to you when I'm able.	"
 text = "To use, copy your update text into the Update box and your image links into the Links box. Make sure your image tags are using the selected tag format on the right and hit \"Replace Text\" to replace the update text.
+
+Those On/Off buttons to the side are to re-enable the old method of sequential replacement used back before we had easy filenames with their links around. It remains as a functional, but obsolete system.
 	
-	If your portrait tags have some numbers in them, (such as \"npcsad_01\",) enable numeric safety on the right to prevent the program misinterpreting them.
-	
-	The program parses the image tags linearly. Thus, the first image link  should correspond to whatever your first image tag's number is. The program will calculate ahead of time any missing numbers in the sequence, thus if you have a #01 and #03, but no #02, it will assign the second image link to be #03 instead."
+Contact me in the Discord if you have any questions or requests and I'll get back to you when I'm able.	"
 scroll_active = false
 
 [node name="HSeparator2" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
@@ -109,6 +109,23 @@ margin_top = 24.0
 margin_right = 610.0
 margin_bottom = 140.0
 size_flags_vertical = 3
+text = "Update 1: That's Not How You Hug
+
+The game has an intro movie like many others, but like many others, also spoils a decent bit of the game's content. However, there is one short scene off the front we'll want to see.
+
+[FE.001.001]
+[FE.001.002]
+[FE.001.003]
+[FE.001.004]
+[FE.001.005]
+
+Aww.
+
+Anyways, adorable child/characterization moment done, we'll skip on the intro for now.
+
+[FE.001.009]
+[FE.001.008]
+"
 
 [node name="HSeparator3" type="HSeparator" parent="HBoxContainer/VBoxContainer"]
 margin_top = 376.0
@@ -140,6 +157,15 @@ margin_top = 24.0
 margin_right = 610.0
 margin_bottom = 140.0
 size_flags_vertical = 3
+text = "FE.001.001,[img]https://bpix.lpbeach.co.uk/upload/1842-edc0a5f1.png[/img]
+FE.001.002,[img]https://bpix.lpbeach.co.uk/upload/1843-c768a001.png[/img]
+FE.001.003,[img]https://bpix.lpbeach.co.uk/upload/1844-05de3e86.png[/img]
+FE.001.004,[img]https://bpix.lpbeach.co.uk/upload/1845-6ed8bc9a.png[/img]
+FE.001.005,[img]https://bpix.lpbeach.co.uk/upload/1846-e4a829a8.png[/img]
+FE.001.006,[img]https://bpix.lpbeach.co.uk/upload/1847-c85738bf.png[/img]
+FE.001.007,[img]https://bpix.lpbeach.co.uk/upload/1848-1f7df05d.png[/img]
+FE.001.008,[img]https://bpix.lpbeach.co.uk/upload/1849-b19e913c.png[/img]
+FE.001.009,[img]https://bpix.lpbeach.co.uk/upload/1850-34c06560.png[/img]"
 show_line_numbers = true
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/VBoxContainer"]
@@ -271,15 +297,65 @@ margin_right = 416.0
 margin_bottom = 20.0
 script = ExtResource( 2 )
 
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer2/vbox"]
+visible = false
+margin_top = 58.0
+margin_right = 466.0
+margin_bottom = 97.0
+custom_constants/margin_top = 6
+custom_constants/margin_bottom = 6
+
+[node name="HBoxContainer" type="HBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer2/vbox/MarginContainer"]
+margin_top = 6.0
+margin_right = 466.0
+margin_bottom = 33.0
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer2/vbox/MarginContainer/HBoxContainer"]
+margin_right = 128.0
+margin_bottom = 27.0
+custom_constants/margin_right = 0
+custom_constants/margin_top = 6
+custom_constants/margin_left = 8
+custom_constants/margin_bottom = -9
+
+[node name="RichTextLabel" type="RichTextLabel" parent="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer2/vbox/MarginContainer/HBoxContainer/MarginContainer"]
+margin_left = 8.0
+margin_top = 6.0
+margin_right = 128.0
+margin_bottom = 36.0
+rect_min_size = Vector2( 120, 30 )
+text = "Extra Identifier:"
+scroll_active = false
+
+[node name="IdentifierBox" type="TextEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer2/vbox/MarginContainer/HBoxContainer"]
+margin_left = 132.0
+margin_right = 232.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 100, 0 )
+
 [node name="HSeparator" type="HSeparator" parent="HBoxContainer/MarginContainer2/VBoxContainer2"]
 margin_top = 64.0
 margin_right = 466.0
 margin_bottom = 68.0
 
-[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2"]
+[node name="MarginContainer4" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2"]
 margin_top = 72.0
 margin_right = 466.0
 margin_bottom = 112.0
+rect_min_size = Vector2( 0, 30 )
+custom_constants/margin_right = 40
+custom_constants/margin_left = 75
+
+[node name="SequentialButton" type="CheckButton" parent="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer4"]
+margin_left = 75.0
+margin_right = 426.0
+margin_bottom = 40.0
+text = "Use Sequential Tag Recognition:"
+
+[node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2"]
+margin_top = 116.0
+margin_right = 466.0
+margin_bottom = 156.0
 rect_min_size = Vector2( 0, 30 )
 custom_constants/margin_right = 40
 custom_constants/margin_left = 75
@@ -288,15 +364,15 @@ custom_constants/margin_left = 75
 margin_left = 75.0
 margin_right = 426.0
 margin_bottom = 40.0
-text = "Evaluate only fully numeric tags:"
+text = "     ---Evaluate only fully numeric tags:"
 
 [node name="HSeparator2" type="HSeparator" parent="HBoxContainer/MarginContainer2/VBoxContainer2"]
-margin_top = 116.0
+margin_top = 160.0
 margin_right = 466.0
-margin_bottom = 120.0
+margin_bottom = 164.0
 
 [node name="txtResult" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2"]
-margin_top = 124.0
+margin_top = 168.0
 margin_right = 466.0
 margin_bottom = 515.0
 size_flags_vertical = 3
@@ -309,16 +385,17 @@ custom_constants/margin_bottom = 5
 margin_left = 5.0
 margin_top = 3.0
 margin_right = 461.0
-margin_bottom = 386.0
+margin_bottom = 342.0
 color = Color( 0.321569, 0.372549, 0.321569, 1 )
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/txtResult"]
 margin_left = 5.0
 margin_top = 3.0
 margin_right = 461.0
-margin_bottom = 386.0
+margin_bottom = 342.0
 custom_constants/margin_right = 10
 custom_constants/margin_left = 10
+custom_constants/margin_bottom = 8
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -326,7 +403,7 @@ __meta__ = {
 [node name="VBoxContainer" type="VBoxContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/txtResult/MarginContainer"]
 margin_left = 10.0
 margin_right = 446.0
-margin_bottom = 383.0
+margin_bottom = 331.0
 
 [node name="MarginContainer" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/txtResult/MarginContainer/VBoxContainer"]
 margin_right = 436.0
@@ -346,7 +423,7 @@ text = " Resulting Update Text:"
 [node name="Result" type="TextEdit" parent="HBoxContainer/MarginContainer2/VBoxContainer2/txtResult/MarginContainer/VBoxContainer"]
 margin_top = 33.0
 margin_right = 436.0
-margin_bottom = 383.0
+margin_bottom = 331.0
 size_flags_vertical = 3
 custom_colors/font_color = Color( 0.94902, 0.94902, 0.94902, 1 )
 custom_colors/font_color_readonly = Color( 0.843137, 0.843137, 0.843137, 1 )
@@ -376,10 +453,8 @@ margin_top = 4.0
 margin_right = 325.0
 margin_bottom = 50.0
 bbcode_enabled = true
-bbcode_text = "If your links have a \"-th\", \"-xs\", \"-2x\" or the like at the end, you have a thumbnailed link.
-This button will fix all the links in the link box."
-text = "If your links have a \"-th\", \"-xs\", \"-2x\" or the like at the end, you have a thumbnailed link.
-This button will fix all the links in the link box."
+bbcode_text = "If you have an old set of thumbnailed links, stick them in the link box and hit this button to give them the proper format."
+text = "If you have an old set of thumbnailed links in the links box, hit this button to give them the proper format."
 scroll_active = false
 
 [node name="MarginContainer2" type="MarginContainer" parent="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer3/HBoxContainer"]
@@ -402,4 +477,5 @@ text = "Fix Links"
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/MarginContainer/HBoxContainer/MarginContainer/ReplaceButton" to="." method="_on_ReplaceButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/MarginContainer/HBoxContainer/MarginContainer2/CopyButton" to="." method="_on_CopyButton_pressed"]
 [connection signal="pressed" from="HBoxContainer/VBoxContainer/MarginContainer/MarginContainer/HBoxContainer/MarginContainer3/ClearButton" to="." method="_on_ClearButton_pressed"]
+[connection signal="item_selected" from="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer2/vbox/MarginContainer2/OptionButton" to="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer2/vbox/MarginContainer2/OptionButton" method="_on_OptionButton_item_selected"]
 [connection signal="pressed" from="HBoxContainer/MarginContainer2/VBoxContainer2/MarginContainer3/HBoxContainer/MarginContainer2/FixLinksButton" to="." method="_on_FixLinksButton_pressed"]
